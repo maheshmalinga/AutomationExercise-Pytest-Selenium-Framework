@@ -42,10 +42,15 @@ class HomePage(BasePage):
     ##### products
     PRODUCT1 = ("xpath", '//*[@src="/get_product_picture/1"]')
     PRODUCT2 = ("xpath", '//*[@src="/get_product_picture/2"]')
+    PRODUCT3 = ("xpath", '//*[@src="/get_product_picture/3"]')
 
     ##### cart
-    CART1 = ("xpath", '//*[@data-product-id="1"]')
-    CART2 = ("xpath", '//*[@data-product-id="2"]')
+    CART1 = ("xpath", "//*[@class='product-overlay']//*[@data-product-id='1']")
+    CART2 = ("xpath", "//*[@class='product-overlay']//*[@data-product-id='2']")
+    CART3 = ("xpath", "//*[@class='product-overlay']//*[@data-product-id='3']")
+
+    #### continue shopping button
+    CONTINUE_SHOPPING_BUTTON = ("xpath",'//*[text()="Continue Shopping"]')
 
 
 ## methods to check visibility of header elements
@@ -141,6 +146,30 @@ class HomePage(BasePage):
         self.driver.execute_script("arguments[0].click();", self.is_element_displayed(self.KOOKIE_KIDS))
     def click_biba_button(self):
         self.driver.execute_script("arguments[0].click();", self.is_element_displayed(self.BIBA))
+
+    ## hovering over the products
+    ## clicking on  add to cart
+    def click_continue_shopping(self):
+        self.click(self.CONTINUE_SHOPPING_BUTTON)
+
+    def add_product1_to_cart(self):
+        self.hover_over_element(self.PRODUCT1)
+        self.click(self.CART1)
+        self.click_continue_shopping()
+
+    def add_product2_to_cart(self):
+        self.hover_over_element(self.PRODUCT2)
+        self.click(self.CART2)
+        self.click_continue_shopping()
+
+    def add_product3_to_cart(self):
+        self.hover_over_element(self.PRODUCT3)
+        self.click(self.CART3)
+        self.click_continue_shopping()
+
+
+
+
 
     #### methods to check pages visibility
     # def is_products_page_displayed(self):

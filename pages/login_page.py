@@ -15,7 +15,7 @@ class LoginPage(BasePage):
         return self.driver.current_url in "https://automationexercise.com/login"
 
     ## LOGIN
-    LOGIN_EMAIL_INPUT = ("xpath",'//*[@data-qa="login-emaill"]')
+    LOGIN_EMAIL_INPUT = ("xpath",'//*[@data-qa="login-email"]')
     LOGIN_PASSWORD_INPUT = ("xpath",'//*[@data-qa="login-password"]')
     LOGIN_BUTTON = ("xpath",'//*[@data-qa="login-button"]')
     INCORRECT_EMAIL_PASSWORD_ERROR = ("xpath",'//*[@data-qa="login-password"]/..//p')
@@ -43,6 +43,9 @@ class LoginPage(BasePage):
         self.enter_text(self.LOGIN_EMAIL_INPUT,email)
         self.enter_text(self.LOGIN_PASSWORD_INPUT,password)
         self.click_login_button()
+
+    def login_as_test_user(self):
+        self.login("uishuman@gmail.com","Password@6656")
 
     def signup(self, name,email):
         self.enter_text(self.SIGNUP_NAME_INPUT,name)

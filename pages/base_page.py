@@ -25,7 +25,21 @@ class BasePage:
         self.driver.refresh()
 
     def go_back(self):
+        """
+        Navigates back and handles the potential Google Vignette ad.
+        """
         self.driver.back()
+
+        # Check if we got stuck on the ad page
+        if "#google_vignette" in self.driver.current_url:
+            print("Ad detected after back navigation! Clearing...")
+
+            # Option 1: Refresh (Most stable)
+            self.driver.refresh()
+
+            # Option 2: If refresh doesn't work, try going back one more time
+            if "#google_vignette" in self.driver.current_url:
+                self.driver.back()
 
     def go_forward(self):
         self.driver.forward()
@@ -66,6 +80,10 @@ class BasePage:
 
     def click(self, locator):
         self.wait.until(EC.element_to_be_clickable(locator)).click()
+        # Check if the ad popped up after the click
+        if "#google_vignette" in self.driver.current_url:
+            print("Ad detected! Refreshing to clear it...")
+            self.driver.refresh()
 
     def enter_text(self, locator, text):
         element = self.wait.until(EC.visibility_of_element_located(locator))

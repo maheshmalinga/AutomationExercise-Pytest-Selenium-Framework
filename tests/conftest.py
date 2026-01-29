@@ -3,7 +3,8 @@ import pytest
 from selenium.webdriver import Chrome, Edge, Firefox
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from utils import config
-
+from pages.home_page import HomePage
+from pages.base_page import BasePage
 
 # ==================== BROWSER FIXTURES ====================
 
@@ -16,6 +17,7 @@ def driver():
     options.add_argument("--start-maximized")
     options.add_argument("--disable-notifications")
     options.add_argument("--disable-popup-blocking")
+    options.add_experimental_option("excludeSwitches", ["disable-popup-blocking"])
     if config.BROWSER == "chrome":
         driver = Chrome(options=options)
     else:
@@ -34,6 +36,7 @@ def driver1():
     options.add_argument("--start-maximized")
     options.add_argument("--disable-notifications")
     options.add_argument("--disable-popup-blocking")
+    options.add_experimental_option("excludeSwitches", ["disable-popup-blocking"])
     if config.BROWSER == "chrome":
         driver = Chrome(options=options)
     else:
@@ -44,6 +47,16 @@ def driver1():
 
     yield driver
     driver.quit()
+
+@pytest.fixture
+def home(driver):
+    home = HomePage(driver)
+    home.open_home_page()
+    return home
+
+@pytest.fixture
+def base(driver):
+    return BasePage(driver)
 
 
 # # ==================== HOOK: AUTOMATIC SCREENSHOTS ====================

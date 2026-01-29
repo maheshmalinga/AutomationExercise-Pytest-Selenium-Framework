@@ -3,17 +3,8 @@ from pages.home_page import HomePage
 from pages.base_page import BasePage
 
 @pytest.fixture
-def base(driver):
-    return BasePage(driver)
-@pytest.fixture
 def base1(driver1):
     return BasePage(driver1)
-
-@pytest.fixture
-def home(driver):
-    home = HomePage(driver)
-    home.open_home_page()
-    return home
 
 @pytest.fixture(scope = "class")
 def home_class(driver1):
@@ -226,6 +217,18 @@ class TestHomePageHomePageBrandsNavigation:
     def test_click_biba_element_displayed(self,home_class,driver1):
         home_class.click_biba_button()
         assert driver1.current_url in "https://automationexercise.com/brand_products/Biba"
+
+class TestHomePageHomePageAddingProductsToCart:
+    @pytest.mark.mark10
+    @pytest.mark.parametrize("product,cart",
+                             [(HomePage.PRODUCT1,HomePage.CART1),(HomePage.PRODUCT2,HomePage.CART2),(HomePage.PRODUCT3,HomePage.CART3)],
+                             ids=["product1","product2","product3"])
+    def test_hover_over_product(self,driver,home,base,product,cart):
+        home.hover_over_element(product)
+        base.click(cart)
+        assert base.is_element_clickable(HomePage.CONTINUE_SHOPPING_BUTTON)
+
+
 
 
 
